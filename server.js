@@ -25,7 +25,7 @@ app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'common', {
 
 // Create a static webserver
 app.use(express.static('public'));
-
+app.use(express.urlencoded({extended: true}));
 // Parse request body
 app.use(express.json());
 
