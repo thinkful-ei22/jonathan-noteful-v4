@@ -44,6 +44,7 @@ app.use('/api/', authRouter);
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
+  console.log('not found');
   err.status = 404;
   next(err);
 });
