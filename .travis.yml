@@ -1,3 +1,11 @@
 language: node_js
 node_js: node
-services: mongodb
+services: "-mongodb"
+deploy:
+  provider: heroku
+  api_key:
+    secure: Z9Z/HpQak8+s1SGOeALj+XpBUbkCZ5MzrD5ZfVEp7V+unI9DWzZ7SaXb5YGwqO5UtF/LZJL2oPF45tNx30dbE22goeSyRyOm0Buo44pkhJvYYLpUltwi2JGDHWq3pn5D2Q3oOm8cZBN+Ag+UttSn6lNC23T7sdQUy6eF4QfD0xkqsPKrP151NOsxT+F929oLC1xpn0tx0XtzzW3DGFWZtHuawsnUoNTYHskc3J8gNncM4tzmUaGffidYwNT8kWFcKOCjKxgIaJxLVmEkBbBPPPdqgBcQtjfG6M6W8RX61wy/RQ64HgDMdUCjBAkWASy8CgHPmBRnH+FZvS6Y5iJygAqdX+9maVjAIPB3tIKfdOc5JNQwKA6//jFdgrysJE4vlsSagTwEmzUfC4tIoGULSfFa9COg/ESAyhK6TSfWAIcMUzQHfaqQjeObAFVghdtyOy4yE8BD/7mQtiTq+btRZ+gjwmWe4Nogw+P2ciwQOjEoOvoj7Gs+zch6rYmhs4P0fwzTCGKbxBFT5XfQUI4CTnZcO+DsDwzAligKzVtabbOBJd4kylKAs3wc05/leXyUxUMDlrAS24zJih33+xs4HACmJpUAzDsr6dgtPcn+Y1LkL2XmYgt1xkYx5MHQuE5QgPPWq8x6wYcxvkfqPZ/CuOfAqQHnLHvaCLhxn+BHeVQ=
+  app: noteful-v4-jon
+  on:
+    repo: thinkful-ei22/jonathan-noteful-v4
+    branch: feature-branch

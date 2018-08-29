@@ -3,12 +3,17 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const jwtStrategy = require('./passport/jwt');
 
 const { PORT, MONGODB_URI } = require('./config');
+const localStrategy = require('./passport/local');
 
 const notesRouter = require('./routes/notes');
 const foldersRouter = require('./routes/folders');
 const tagsRouter = require('./routes/tags');
+const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 // Create an Express application
 const app = express();
@@ -20,18 +25,31 @@ app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'common', {
 
 // Create a static webserver
 app.use(express.static('public'));
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> feature-branch
 app.use(express.urlencoded({extended: true}));
 // Parse request body
 app.use(express.json());
+
+// Utilize the given `strategy`
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 // Mount routers
 app.use('/api/notes', notesRouter);
 app.use('/api/folders', foldersRouter);
 app.use('/api/tags', tagsRouter);
 
+app.use('/api/users', usersRouter);
+app.use('/api/', authRouter);
+
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
+  console.log('not found');
   err.status = 404;
   next(err);
 });
