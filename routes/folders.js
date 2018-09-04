@@ -6,17 +6,13 @@ const mongoose = require('mongoose');
 const Folder = require('../models/folder');
 const Note = require('../models/note');
 
-const passport = require('passport');
-
 const router = express.Router();
-
-router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
   const userId = req.user.id;
 
-  Folder.find({userId})
+  Folder.find({ userId })
     .sort('name')
     .then(results => {
       res.json(results);
@@ -31,6 +27,7 @@ router.get('/:id', (req, res, next) => {
   const { id } = req.params;
   const userId = req.user.id;
 
+  /***** Never trust users - validate input *****/
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
     err.status = 400;
@@ -96,10 +93,9 @@ router.put('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const updateFolder = { name };
-  const filter = { _id: id, userId };
+  const updateFolder = { name, userId };
 
-  Folder.findOneAndUpdate(filter, updateFolder, { new: true })
+  Folder.findByIdAndUpdate(id, updateFolder, { new: true })
     .then(result => {
       if (result) {
         res.json(result);
@@ -128,10 +124,7 @@ router.delete('/:id', (req, res, next) => {
     return next(err);
   }
 
-  // ON DELETE SET NULL equivalent
-  const folderRemovePromise = Folder.findOneAndRemove({_id: id, userId});
-  // ON DELETE CASCADE equivalent
-  // const noteRemovePromise = Note.deleteMany({ folderId: id });
+  const folderRemovePromise = Folder.findOneAndRemove({ _id: id, userId });
 
   const noteRemovePromise = Note.updateMany(
     { folderId: id, userId },
